@@ -1,122 +1,114 @@
 <?php
 session_start();
+require_once(__DIR__ . '/../storage.php');
+
 $userName           = htmlspecialchars($_POST['username']);
 $lastName           = htmlspecialchars($_POST['lastname']);
 $nameOrganization   = htmlspecialchars($_POST['nameOrganization']);
 $viewOrganization   = htmlspecialchars($_POST['viewOrganization']);
-$i                  = 0;
-$result             = 0;
+
+$i      = 0;
+$result = 0;
 while ($i < 21){
     $result = $result + $_POST[$i];
     $i++;
 }
-//echo "----------------------------------------------------------------------";
-$link       = mysqli_connect('localhost', 'root', 'root', 'diplom');
-//$mysql      = $link->query("INSERT INTO `users` (`username`, `lastname`, `orgName`, `result`) VALUES ('$userName', '$lastName', '$nameOrganization')");
-$resultPerc             = $result * 1.5873."%"."<br>";
 
+// Итог
+$resultNumber = $result * 1.5873;          // число
+$resultPerc   = $resultNumber . "%" . "<br>"; // формат как в оригинале
+
+// Результаты по блокам
 $resultDigitalCulture   = (($_POST[0]+$_POST[1]+$_POST[2])*11.11);
 $resultDigitalCultureW  = ($_POST[0]+$_POST[1]+$_POST[2]);
+
 $resultPersoneller      = (($_POST[3]+$_POST[4]+$_POST[5])*11.11);
 $resultPersonellerW     = ($_POST[3]+$_POST[4]+$_POST[5]);
+
 $resultProcesses        = (($_POST[6]+$_POST[7]+$_POST[8])*11.11);
 $resultProcessesW       = ($_POST[6]+$_POST[7]+$_POST[8]);
+
 $resultDigitalProducts  = (($_POST[9]+$_POST[10]+$_POST[11])*11.11);
 $resultDigitalProductsW = ($_POST[9]+$_POST[10]+$_POST[11]);
+
 $resultModels           = (($_POST[12]+$_POST[13]+$_POST[14])*11.11);
 $resultModelsW          = ($_POST[12]+$_POST[13]+$_POST[14]);
+
 $resultDates            = (($_POST[15]+$_POST[16]+$_POST[17])*11.11);
 $resultDatesW           = ($_POST[15]+$_POST[16]+$_POST[17]);
+
 $resultInfTools         = (($_POST[18]+$_POST[19]+$_POST[20])*11.11);
 $resultInfToolsW        = ($_POST[18]+$_POST[19]+$_POST[20]);
 
-if ($resultDigitalCulture < 50){
-    $connect                 = $link->query("SELECT * FROM `static` WHERE `id`='1'")->fetch_assoc();
-    $connectRec0             = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='1'")->fetch_assoc();
-    $connectRec1             = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='2'")->fetch_assoc();
-    $connectRec2             = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='3'")->fetch_assoc();
-    $_SESSION['connectRec0'] = $connectRec0['recomendation'];
-    $_SESSION['connectRec1'] = $connectRec1['recomendation'];
-    $_SESSION['connectRec2'] = $connectRec2['recomendation'];
-    $index                   = $connect['staticNumber'] + 1;
-    $connect                 = $link->query("UPDATE `static` SET `staticNumber` = '$index' WHERE `id` = 1;");
-}
-$connect1       = $link->query("SELECT `staticNumber` FROM `static` WHERE `id`='1'")->fetch_assoc();
-if ($resultPersoneller < 50) {
-    $connect        = $link->query("SELECT * FROM `static` WHERE `id`='2'")->fetch_assoc();
-    $connectRec4    = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='4'")->fetch_assoc();
-    $connectRec5    = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='5'")->fetch_assoc();
-    $connectRec6    = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='6'")->fetch_assoc();
-    $_SESSION['connectRec3'] = $connectRec4['recomendation'];
-    $_SESSION['connectRec4'] = $connectRec5['recomendation'];
-    $_SESSION['connectRec5'] = $connectRec6['recomendation'];
-    $index          = $connect['staticNumber'] + 1;
-    $connect        = $link->query("UPDATE `static` SET `staticNumber` = '$index' WHERE `id` = 2;");
-}
-$connect2       = $link->query("SELECT `staticNumber` FROM `static` WHERE `id`='2'")->fetch_assoc();
-if ($resultProcesses < 50){
-    $connect        = $link->query("SELECT * FROM `static` WHERE `id`='3'")->fetch_assoc();
-    $connectRec7    = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='7'")->fetch_assoc();
-    $connectRec8    = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='8'")->fetch_assoc();
-    $connectRec9    = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='9'")->fetch_assoc();
-    $_SESSION['connectRec6'] = $connectRec7['recomendation'];
-    $_SESSION['connectRec7'] = $connectRec8['recomendation'];
-    $_SESSION['connectRec8'] = $connectRec9['recomendation'];
-    $index          = $connect['staticNumber'] + 1;
-    $connect        = $link->query("UPDATE `static` SET `staticNumber` = '$index' WHERE `id` = 3;");
-}
-$connect3       = $link->query("SELECT `staticNumber` FROM `static` WHERE `id`='3'")->fetch_assoc();
-if ($resultDigitalProducts < 50){
-    $connect        = $link->query("SELECT * FROM `static` WHERE `id`='4'")->fetch_assoc();
-    $connectRec10   = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='10'")->fetch_assoc();
-    $connectRec11   = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='11'")->fetch_assoc();
-    $connectRec12   = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='12'")->fetch_assoc();
-    $_SESSION['connectRec9'] = $connectRec10['recomendation'];
-    $_SESSION['connectRec10'] = $connectRec11['recomendation'];
-    $_SESSION['connectRec11'] = $connectRec12['recomendation'];
-    $index          = $connect['staticNumber'] + 1;
-    $connect        = $link->query("UPDATE `static` SET `staticNumber` = '$index' WHERE `id` = 4;");
-}
-$connect4       = $link->query("SELECT `staticNumber` FROM `static` WHERE `id`='4'")->fetch_assoc();
-if ($resultModels < 50){
-    $connect        = $link->query("SELECT * FROM `static` WHERE `id`='5'")->fetch_assoc();
-    $connectRec13   = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='13'")->fetch_assoc();
-    $connectRec14   = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='14'")->fetch_assoc();
-    $connectRec15   = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='15'")->fetch_assoc();
-    $_SESSION['connectRec12'] = $connectRec13['recomendation'];
-    $_SESSION['connectRec13'] = $connectRec14['recomendation'];
-    $_SESSION['connectRec14'] = $connectRec15['recomendation'];
-    $index          = $connect['staticNumber'] + 1;
-    $connect        = $link->query("UPDATE `static` SET `staticNumber` = '$index' WHERE `id` = 5;");
-}
-$connect5       = $link->query("SELECT `staticNumber` FROM `static` WHERE `id`='5'")->fetch_assoc();
-if ($resultDates < 50) {
-    $connect        = $link->query("SELECT * FROM `static` WHERE `id`='6'")->fetch_assoc();
-    $connectRec16   = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='16'")->fetch_assoc();
-    $connectRec17   = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='17'")->fetch_assoc();
-    $connectRec18   = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='18'")->fetch_assoc();
-    $_SESSION['connectRec15'] = $connectRec16['recomendation'];
-    $_SESSION['connectRec16'] = $connectRec17['recomendation'];
-    $_SESSION['connectRec17'] = $connectRec18['recomendation'];
-    $index          = $connect['staticNumber'] + 1;
-    $connect        = $link->query("UPDATE `static` SET `staticNumber` = '$index' WHERE `id` = 6;");
-}
-$connect6       = $link->query("SELECT `staticNumber` FROM `static` WHERE `id`='6'")->fetch_assoc();
-if ($resultInfTools < 50) {
-    $connect        = $link->query("SELECT * FROM `static` WHERE `id`='7'")->fetch_assoc();
-    $connectRec19   = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='19'")->fetch_assoc();
-    $connectRec20   = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='20'")->fetch_assoc();
-    $connectRec21   = $link->query("SELECT `recomendation` FROM `recomendation` WHERE `id`='21'")->fetch_assoc();
-    $_SESSION['connectRec18'] = $connectRec19['recomendation'];
-    $_SESSION['connectRec19'] = $connectRec20['recomendation'];
-    $_SESSION['connectRec20'] = $connectRec21['recomendation'];
-    $index          = $connect['staticNumber'] + 1;
-    $connect        = $link->query("UPDATE `static` SET `staticNumber` = '$index' WHERE `id` = 7;");
-}
-$connect7       = $link->query("SELECT `staticNumber` FROM `static` WHERE `id`='7'")->fetch_assoc();
-//echo $resultPerc;
-$connectUser = $link->query("INSERT INTO `users` (`username`, `lastname`, `orgName`, `result`) VALUES ('$userName', '$lastName', '$nameOrganization', '$resultPerc')");
+// Флаг: есть ли хотя бы один блок < 50 (для кнопки "Скачать рекомендации")
+$connect = 0;
 
+// Если блок < 50 — кладём 3 рекомендации в session и увеличиваем счётчик statics.json (id 1..7)
+if ($resultDigitalCulture < 50){
+    $_SESSION['connectRec0'] = get_recommendation(1);
+    $_SESSION['connectRec1'] = get_recommendation(2);
+    $_SESSION['connectRec2'] = get_recommendation(3);
+    increment_static(1);
+    $connect = 1;
+}
+$connect1 = ['staticNumber' => get_static_number(1)];
+
+if ($resultPersoneller < 50) {
+    $_SESSION['connectRec3'] = get_recommendation(4);
+    $_SESSION['connectRec4'] = get_recommendation(5);
+    $_SESSION['connectRec5'] = get_recommendation(6);
+    increment_static(2);
+    $connect = 1;
+}
+$connect2 = ['staticNumber' => get_static_number(2)];
+
+if ($resultProcesses < 50){
+    $_SESSION['connectRec6'] = get_recommendation(7);
+    $_SESSION['connectRec7'] = get_recommendation(8);
+    $_SESSION['connectRec8'] = get_recommendation(9);
+    increment_static(3);
+    $connect = 1;
+}
+$connect3 = ['staticNumber' => get_static_number(3)];
+
+if ($resultDigitalProducts < 50){
+    $_SESSION['connectRec9']  = get_recommendation(10);
+    $_SESSION['connectRec10'] = get_recommendation(11);
+    $_SESSION['connectRec11'] = get_recommendation(12);
+    increment_static(4);
+    $connect = 1;
+}
+$connect4 = ['staticNumber' => get_static_number(4)];
+
+if ($resultModels < 50){
+    $_SESSION['connectRec12'] = get_recommendation(13);
+    $_SESSION['connectRec13'] = get_recommendation(14);
+    $_SESSION['connectRec14'] = get_recommendation(15);
+    increment_static(5);
+    $connect = 1;
+}
+$connect5 = ['staticNumber' => get_static_number(5)];
+
+if ($resultDates < 50){
+    $_SESSION['connectRec15'] = get_recommendation(16);
+    $_SESSION['connectRec16'] = get_recommendation(17);
+    $_SESSION['connectRec17'] = get_recommendation(18);
+    increment_static(6);
+    $connect = 1;
+}
+$connect6 = ['staticNumber' => get_static_number(6)];
+
+if ($resultInfTools < 50){
+    $_SESSION['connectRec18'] = get_recommendation(19);
+    $_SESSION['connectRec19'] = get_recommendation(20);
+    $_SESSION['connectRec20'] = get_recommendation(21);
+    increment_static(7);
+    $connect = 1;
+}
+$connect7 = ['staticNumber' => get_static_number(7)];
+
+// Логируем прохождение теста (users.json)
+add_user_result($userName, $lastName, $nameOrganization, $resultNumber);
 
 // Массив данных и цветов
 $data = [
@@ -173,7 +165,7 @@ imagepng($image, 'pie_chart.png');
 // Освобождаем ресурсы
 imagedestroy($image);
 
-require("../header.php");
+require("./header.php");
 ?>
 <style>
     .custom-list .custom-item::after {
